@@ -10,7 +10,8 @@
     "lint": "eslint \"src/**/*.ts\""
   },
   "dependencies": {
-    "@repo/ui": "*"
+    "@repo/ui": "*",
+    "navigo": "^8.11.1"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

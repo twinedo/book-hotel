@@ -10,8 +10,8 @@ type CounterProps = {
 };
 
 export function Counter({
-  initialValue = 0,
-  min = 0,
+  initialValue = 1,
+  min = 1,
   max = Infinity,
   step = 1,
   onChange,

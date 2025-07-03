@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@repo/ui": "*",
-    "react-calendar": "^6.0.0"
+    "date-fns": "^4.1.0",
+    "react-calendar": "^6.0.0",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

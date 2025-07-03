@@ -1,28 +1,29 @@
-import React, { useState } from "react";
-import { Popup } from "../popup";
+import React from "react";
 import { BiSearch } from "react-icons/bi";
 import "./styles.css";
+import useSearchStore from "../../store/search-store";
 
 export function PopupSearch() {
-  const [isShowPopup, setIsShowPopup] = useState(false);
+  const selectedLocation = useSearchStore((state) => state.selectedLocation);
+  const setMode = useSearchStore((state) => state.setMode);
+  const mode = useSearchStore((state) => state.mode);
+
+  const onClickField = () => {
+    if (mode === "location") {
+      setMode(undefined);
+    } else {
+      setMode("location");
+    }
+  };
 
   return (
     <div style={{ flex: 1 }}>
-      <Popup
-        position="bottom"
-        isShowPopup={isShowPopup}
-        mainComponent={
-          <div
-            className="popup-search-wrapper"
-            onClick={() => setIsShowPopup(!isShowPopup)}
-          >
-            <BiSearch size={16} />
-            <div className="font-medium">Find city, hotels, </div>
-          </div>
-        }
-      >
-        <div>Test</div>
-      </Popup>
+      <div className="popup-search-wrapper" onClick={onClickField}>
+        <BiSearch size={16} />
+        <div className="font-medium">
+          {selectedLocation === '' ? "Find city, hotels..." : selectedLocation}
+        </div>
+      </div>
     </div>
   );
 }

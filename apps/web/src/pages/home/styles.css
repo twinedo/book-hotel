@@ -36,18 +36,18 @@
 }
 
 .home-page-content-wrapper {
-  margin-top: 2rem;
+  margin-top: 7rem;
+  margin-bottom: 2rem;
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   max-width: 80rem;
-  border: 5px solid black;
 }
 
 .search-popup-wrapper {
   position: absolute;
-  top: 1.75rem;
+  top: 0.5rem;
   box-sizing: border-box;
   max-width: 80rem;
 }

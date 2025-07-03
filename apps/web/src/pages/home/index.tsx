@@ -7,6 +7,7 @@ import { DateRangePicker } from "../../components/date-range-picker";
 import { RoomGuestCount } from "../../components/room-guest-count";
 import useSearchStore from "../../store/search-store";
 import { SearchLocation } from "../../components/search-location";
+import { HomeRecommendationCity } from "../../components/home-recommendation-city";
 
 export function RenderHome() {
 
@@ -36,7 +37,7 @@ export function RenderHome() {
           </div>
         )}
 
-        <h1>THIS IS CONTENT AT HOME</h1>
+        <HomeRecommendationCity />
       </div>
     </div>
   );

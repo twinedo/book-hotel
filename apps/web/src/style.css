@@ -44,6 +44,15 @@ h1 {
   box-sizing: border-box;
 }
 
+.row {
+  display: flex;
+  flex-direction: row; 
+}
+
+.gap-x-2 {
+  gap: 4px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

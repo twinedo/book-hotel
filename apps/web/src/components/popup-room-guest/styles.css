@@ -1,0 +1,11 @@
+.popup-room-guest-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem;
+    width: 14rem;
+    background: lightcyan;
+    border-radius: 10px;
+}

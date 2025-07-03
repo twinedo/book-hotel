@@ -1,0 +1,28 @@
+.room-guest-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+
+}
+
+.room-guest-item-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.room-guest-item {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.room-guest-title {
+    display: flex;
+    flex: 1;
+}

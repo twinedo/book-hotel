@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export function renderAuth() {
+export function RenderAuth() {
   const main = document.getElementById("main-content")!;
   main.innerHTML = `
     <div class="auth-page">

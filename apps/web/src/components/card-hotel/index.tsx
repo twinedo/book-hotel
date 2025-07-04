@@ -1,6 +1,7 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import "./styles.css";
+import { HotelClass } from "../hotel-class";
 
 type CardHotelProps = {
   imageSource?: string;
@@ -15,13 +16,7 @@ export function CardHotel(props: CardHotelProps) {
     <div className="card-hotel-wrapper">
       <img src={imageSource} className="card-hotel-image" />
       <div className="card-hotel-content">
-        <div className="card-hotel-class-list">
-          {Array(hotelClass)
-            .fill("")
-            .map(() => (
-              <FaStar size={16} color="yellow" />
-            ))}
-        </div>
+        <HotelClass star={hotelClass} />
         <h3>{title}</h3>
         <div>{`${rating} / 5.0`}</div>
       </div>

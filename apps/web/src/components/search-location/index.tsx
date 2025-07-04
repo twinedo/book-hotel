@@ -18,12 +18,14 @@ export function SearchLocation() {
     if (location.length > 0) {
       prevLoc.push(location);
       setLocationList(prevLoc);
+    } else {
+      setLocationList([])
     }
-    setLocationList([])
   };
 
   const onSelectLocation = (loc: string) => {
     setSelectedLocation(loc);
+    setLocation(loc)
   };
 
   return (

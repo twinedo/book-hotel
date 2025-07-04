@@ -1,0 +1,45 @@
+.room-result-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.room-result-list-item {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.hotel-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.list-item-image {
+    width: 300px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.list-item-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.grid-facilities {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}

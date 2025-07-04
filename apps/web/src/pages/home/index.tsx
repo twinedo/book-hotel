@@ -8,6 +8,7 @@ import { RoomGuestCount } from "../../components/room-guest-count";
 import useSearchStore from "../../store/search-store";
 import { SearchLocation } from "../../components/search-location";
 import { HomeRecommendationCity } from "../../components/home-recommendation-city";
+import { RoomResultList } from "../../components/room-result-list";
 
 export function RenderHome() {
 
@@ -37,7 +38,8 @@ export function RenderHome() {
           </div>
         )}
 
-        <HomeRecommendationCity />
+        {/* <HomeRecommendationCity /> */}
+        <RoomResultList />
       </div>
     </div>
   );

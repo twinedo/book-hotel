@@ -50,6 +50,7 @@
   top: 0.5rem;
   box-sizing: border-box;
   max-width: 80rem;
+  z-index: 40;
 }
 
 .search-popup-container {

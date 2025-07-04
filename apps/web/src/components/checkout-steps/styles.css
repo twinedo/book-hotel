@@ -1,0 +1,50 @@
+/* Steps Component */
+.checkout-header-step-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.checkout-header-step {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    background: lightcoral;
+    border-radius: 30px;
+    padding: 0px 15px;
+}
+
+.checkout-header-step-disabled {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    padding: 0px 15px;
+}
+
+.checkout-header-step-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.checkout-header-step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.dashed-line {
+    flex: 1;
+    height: 1px;
+    border-top: 2px dashed #ccc;
+    min-width: 20px;
+}

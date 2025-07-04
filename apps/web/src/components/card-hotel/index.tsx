@@ -1,5 +1,4 @@
 import React from "react";
-import { FaStar } from "react-icons/fa";
 import "./styles.css";
 import { HotelClass } from "../hotel-class";
 

@@ -1,0 +1,136 @@
+.checkout-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;   
+}
+
+.checkout-header {
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    box-sizing: border-box;
+    background: #fff;
+    height: 150px;
+    padding: 1rem;
+    justify-content: center;
+}
+
+.checkout-header-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 80rem;
+    box-sizing: border-box;
+    background: #fff;
+    gap: 20px;
+}
+
+.checkout-header-step-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.checkout-header-step {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    background: lightcoral;
+    border-radius: 30px;
+    padding: 0px 15px;
+}
+
+.checkout-header-step-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.checkout-header-step-disabled {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    padding: 0px 15px;
+}
+
+.checkout-header-step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkout-content-wrapper {
+    display: flex;
+    /* flex: 1; */
+    margin-top: 150px;
+    background: lightgrey;
+    justify-content: center;
+    /* align-items: center; */
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+    margin-bottom: 100px;
+    
+}
+
+.checkout-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-width: 80rem;
+    padding: 1rem;
+    gap: 1rem;
+    
+}
+
+.checkout-content-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.booking-details-img {
+    width: 400px;
+    height: 300px;
+    border-radius: 20px;
+}
+
+.subtotal-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.subtotal-title {
+    font-size: 20px;
+    color: #000;
+    font-weight: 700;
+}
+
+.subtotal-subtitle {
+    font-size: 14px;
+    color: #000;
+    font-weight: 700;
+}
+
+.promo-link {
+  color: white !important;
+  text-decoration: underline;
+}
+
+.promo-divider {
+  padding: 0 0.25rem;
+}

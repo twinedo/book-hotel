@@ -18,7 +18,6 @@ export function RoomResultList() {
               className="list-item-image"
             />
             <div className="list-item-info-wrapper">
-                
               <div className="hotel-title">Hotel Jakarta</div>
               <HotelClass star={4} />
               <div>4.5/5.0 (1,000 reviews)</div>
@@ -26,17 +25,17 @@ export function RoomResultList() {
                 <h3>Facilities</h3>
                 <div className="grid-facilities">
                   <div>
-                    <MdFreeBreakfast size={16} /> Breakfast
+                    <MdFreeBreakfast size={18} /> Breakfast
                   </div>
                   <div>
-                    <TbAirConditioning size={16} />
+                    <TbAirConditioning size={18} />
                     Air Conditioner
                   </div>
                   <div>
-                    <FaWifi size={16} /> WiFi
+                    <FaWifi size={18} /> WiFi
                   </div>
                   <div>
-                    <FaParking size={16} /> Parking
+                    <FaParking size={18} /> Parking
                   </div>
                 </div>
               </div>

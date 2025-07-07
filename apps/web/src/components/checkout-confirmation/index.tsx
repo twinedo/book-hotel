@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import "./styles.css";
 import { HotelClass } from "../hotel-class";
-import { MdFreeBreakfast } from "react-icons/md";
-import { TbAirConditioning } from "react-icons/tb";
-import { FaParking, FaWifi } from "react-icons/fa";
-import { citySuggestions } from "../../utils/const";
 import useCheckoutStore from "../../store/checkout-store";
+import { VscDebugBreakpointLog } from "react-icons/vsc";
+import { useNavigate } from "react-router";
+import useSearchStore from "../../store/search-store";
 
 type ConfirmationProps = {
-  bookingNumber: string;
-  checkInDate: string;
-  checkOutDate: string;
+  checkInDate: string | undefined;
+  checkOutDate: string | undefined;
   totalPrice: string;
   email: string;
 };
 
 export function CheckoutConfirmation({
-  bookingNumber,
   checkInDate,
   checkOutDate,
   totalPrice,
   email,
 }: ConfirmationProps) {
-  const notes = useCheckoutStore((state) => state.notes);
-  const contactDetail = useCheckoutStore((state) => state.contactDetail);
+  const navigate = useNavigate()
+  const {contactDetail, selectedHotel, selectedRoom, notes, resetCheckout} = useCheckoutStore();
+  const {resetSearch} = useSearchStore()
   const [viewBooking, setViewBooking] = useState(false)
+
+  const onBackHome = () => {
+    resetCheckout()
+    resetSearch()
+    navigate('/')
+  }
 
   return (
     <div className="confirmation-container column gap-y-2">
@@ -32,7 +36,7 @@ export function CheckoutConfirmation({
         <div className="confirmation-header">
           <h1>YOUR BOOKING HAS BEEN CONFIRMED</h1>
           <p className="confirmation-subtext">
-            We have sent booking confirmation to <strong>{email}</strong>
+            We have confirmed your booking with email <strong>{email}</strong>
           </p>
         </div>
 
@@ -42,11 +46,6 @@ export function CheckoutConfirmation({
             <span className="detail-value">
               {checkInDate} → {checkOutDate}
             </span>
-          </div>
-
-          <div className="detail-row">
-            <span className="detail-label">Booking confirmation Number:</span>
-            <span className="detail-value">{bookingNumber}</span>
           </div>
 
           <div className="detail-row">
@@ -62,29 +61,21 @@ export function CheckoutConfirmation({
           <h2>Booking Details</h2>
           <div className="row gap-x-2">
             <img
-              src={citySuggestions[0].imageSource}
+              src={selectedHotel?.images}
               style={{ width: 150, height: 100 }}
             />
             <div className="list-item-info-wrapper">
-              <div className="hotel-title">Hotel Jakarta</div>
-              <HotelClass star={4} />
+              <div className="hotel-title">{selectedHotel?.name}</div>
+              <HotelClass star={selectedHotel?.classHotel ?? 1} />
               <div>4.5/5.0 (1,000 reviews)</div>
               <div>
                 <h3>Facilities</h3>
                 <div className="grid-facilities">
-                  <div>
-                    <MdFreeBreakfast size={18} /> Breakfast
-                  </div>
-                  <div>
-                    <TbAirConditioning size={18} />
-                    Air Conditioner
-                  </div>
-                  <div>
-                    <FaWifi size={18} /> WiFi
-                  </div>
-                  <div>
-                    <FaParking size={18} /> Parking
-                  </div>
+                  {selectedRoom?.facilities.split(",").map((facility) => (
+                                              <div>
+                                                <VscDebugBreakpointLog size={18} /> {facility}
+                                              </div>
+                                            ))}
                 </div>
               </div>
               {notes.length > 0 && (
@@ -111,6 +102,8 @@ export function CheckoutConfirmation({
           </div>
         </div>
       </div>}
+
+      <button className="confirmation-button" style={{background: 'red'}} onClick={onBackHome}>Back to Home</button>
     </div>
   );
 }

@@ -1,4 +1,23 @@
-import type {ProfileProps} from './types/profile'
-import type { IProject } from './types/project';
+import type {
+  Hotel,
+  Room,
+  RoomAvailability,
+  Booking,
+  BookingFormData,
+  BookingStatus,
+  BookingWithDetails,
+  User,
+  UserLogin,
+} from "./types";
 
-export type {ProfileProps, IProject};
+export {
+  Hotel,
+  Room,
+  RoomAvailability,
+  Booking,
+  BookingFormData,
+  BookingStatus,
+  BookingWithDetails,
+  User,
+  UserLogin,
+};

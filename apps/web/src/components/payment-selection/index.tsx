@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './styles.css';
 import { BankDetails } from '../../store/checkout-store';
 
@@ -14,7 +14,7 @@ export const PaymentSelection = ({
   loading = false
 }: PaymentSelectionProps) => {
   const [selectedBank, setSelectedBank] = useState<BankDetails | null>(initialSelected);
-  const banks: BankDetails[] = [
+  const banks: BankDetails[] = useMemo(() => [
     {
       id: 'BCA',
       name: 'BCA Virtual Account',
@@ -30,7 +30,7 @@ export const PaymentSelection = ({
       name: 'Mandiri Virtual Account',
       virtualAccount: `8${Math.floor(1000000000 + Math.random() * 9000000000)}`,
     }
-  ];
+  ], []);
 
   const handleSubmit = () => {
     if (selectedBank) {

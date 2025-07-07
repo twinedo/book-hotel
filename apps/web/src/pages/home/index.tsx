@@ -8,15 +8,16 @@ import { RoomGuestCount } from "../../components/room-guest-count";
 import useSearchStore from "../../store/search-store";
 import { SearchLocation } from "../../components/search-location";
 import { HomeRecommendationCity } from "../../components/home-recommendation-city";
-import { RoomResultList } from "../../components/room-result-list";
+import { HotelResultList } from "../../components/hotel-result-list";
 
 export function RenderHome() {
 
   const {
     mode,
-    setSelectedDate
+    setSelectedDate,
+    isResult,
   } = useSearchStore();
-
+  
   return (
     <div className="home-page">
       <div className="hero-background-wrapper">
@@ -31,15 +32,18 @@ export function RenderHome() {
             <div className="search-popup-container">
               {mode === "location" && <SearchLocation />}
               {mode === "date" && (
-                <DateRangePicker onChange={(range) => setSelectedDate(range)} />
+                <DateRangePicker onChange={(range) => {
+                  setSelectedDate(range)
+                  console.log('range', range);
+                }} />
               )}
               {mode === "room-guest" && <RoomGuestCount />}
             </div>
           </div>
         )}
 
-        {/* <HomeRecommendationCity /> */}
-        <RoomResultList />
+        {!isResult && <HomeRecommendationCity />}
+        {isResult && <HotelResultList />}
       </div>
     </div>
   );

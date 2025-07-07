@@ -13,23 +13,33 @@ export function SearchLocation() {
     (state) => state.setSelectedLocation
   );
 
+  const setMode = useSearchStore(
+    (state) => state.setMode
+  );
+
   const onSearchLocation = () => {
     const prevLoc = [...locationList];
     if (location.length > 0) {
       prevLoc.push(location);
       setLocationList(prevLoc);
     } else {
-      setLocationList([])
+      setLocationList([]);
     }
   };
 
   const onSelectLocation = (loc: string) => {
     setSelectedLocation(loc);
-    setLocation(loc)
+    setLocation(loc);
   };
+  
+  const onSelectResultLocation = (loc: string) => {
+    setSelectedLocation(loc);
+    setLocation(loc);
+    setMode(undefined)
+  }
 
   return (
-    <div>
+    <div className="column gap-y-2">
       <h2>Where to go?</h2>
       <div className="row search-popup-location-wrapper">
         <div className="search-popup-location">
@@ -48,19 +58,20 @@ export function SearchLocation() {
           Search
         </button>
       </div>
-      <div className="search-location-list">
-        {locationList.length > 0 &&
-          locationList.map((item) => (
+      {locationList.length > 0 && (
+        <div className="search-location-list">
+          {locationList.map((item) => (
             <div
               className="search-location-list-item"
-              onClick={() => onSelectLocation(item)}
+              onClick={() => onSelectResultLocation(item)}
             >
               <MdPinDrop />
               {item}
             </div>
           ))}
-      </div>
-      <div>
+        </div>
+      )}
+      <div className="column gap-y-2">
         <h3>Recommendations</h3>
         <div className="city-suggestions-wrapper">
           {citySuggestions.map((item) => (

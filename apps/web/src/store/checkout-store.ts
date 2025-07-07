@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { Hotel, Room } from "~repo-shared";
 
 interface ContactDetail {
   fullName: string;
@@ -17,11 +18,8 @@ interface CheckoutState {
   currentStep: number;
   contactDetail: ContactDetail;
   paymentMethod: BankDetails;
-  selectedHotel: {
-    title: string;
-    finalPrice: number;
-    id: string;
-  };
+  selectedHotel: Hotel | undefined;
+  selectedRoom: Room | undefined;
   notes: string;
 }
 
@@ -29,7 +27,8 @@ interface CheckoutAction {
   setCurrentStep: (value: number) => void;
   setContactDetail: (value: ContactDetail) => void;
   setPaymentMethod: (value: BankDetails) => void;
-  setSelectedHotel: (value: CheckoutState["selectedHotel"]) => void;
+  setSelectedHotel: (value: Hotel) => void;
+  setSelectedRoom: (value: Room) => void;
   setNotes: (value: string) => void;
   resetCheckout: () => void;
 }
@@ -42,16 +41,13 @@ const initCheckoutState: CheckoutState = {
     email: "",
   },
   paymentMethod: {
-    id: '',
+    id: "",
     name: "",
     virtualAccount: "",
   },
-  selectedHotel: {
-    title: "",
-    finalPrice: 0,
-    id: "",
-  },
-  notes: ''
+  selectedHotel: undefined,
+  selectedRoom: undefined,
+  notes: "",
 };
 
 const useCheckoutStore = create<CheckoutState & CheckoutAction>()(
@@ -61,9 +57,11 @@ const useCheckoutStore = create<CheckoutState & CheckoutAction>()(
       setCurrentStep: (value: number) => set({ currentStep: value }),
       setContactDetail: (value: ContactDetail) => set({ contactDetail: value }),
       setPaymentMethod: (value: BankDetails) => set({ paymentMethod: value }),
-      setSelectedHotel: (value: CheckoutState["selectedHotel"]) =>
+      setSelectedHotel: (value: Hotel | undefined) =>
         set({ selectedHotel: value }),
-      setNotes: (value: string) => set({notes: value}),
+      setSelectedRoom: (value: Room | undefined) =>
+        set({ selectedRoom: value }),
+      setNotes: (value: string) => set({ notes: value }),
       resetCheckout: () => set(initCheckoutState),
     }),
     {

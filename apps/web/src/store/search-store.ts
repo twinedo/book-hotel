@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { DateRange } from "../components/date-range-picker";
 import { persist } from "zustand/middleware";
+import { Hotel } from "~repo-shared";
 
 interface RoomGuest {
   rooms: number;
@@ -12,6 +13,7 @@ interface SearchState {
   selectedLocation: string;
   selectedDate: DateRange;
   selectedRoomGuest: RoomGuest;
+  isResult: boolean
 }
 
 interface SearchAction {
@@ -19,6 +21,7 @@ interface SearchAction {
   setSelectedLocation: (value: string) => void;
   setSelectedDate: (value: DateRange) => void;
   setSelectedRoomGuest: (value: RoomGuest) => void;
+  setIsResult: (value: boolean) => void;
   resetSearch: () => void;
 }
 
@@ -33,6 +36,7 @@ const initSearchState: SearchState = {
     rooms: 1,
     guests: 1,
   },
+  isResult: false,
 };
 
 const useSearchStore = create<SearchState & SearchAction>()(
@@ -44,6 +48,7 @@ const useSearchStore = create<SearchState & SearchAction>()(
       setSelectedDate: (value: DateRange) => set({ selectedDate: value }),
       setSelectedRoomGuest: (value: RoomGuest) =>
         set({ selectedRoomGuest: {guests: value.guests, rooms: value.rooms} }),
+      setIsResult: (value: boolean) => set({isResult: value}),
       resetSearch: () => set(initSearchState),
     }),
     {

@@ -5,6 +5,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
+    padding: 1rem 0px;
 
 }
 
@@ -35,6 +36,7 @@
     line-height: 10px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .home-recommendation-city-card::after {

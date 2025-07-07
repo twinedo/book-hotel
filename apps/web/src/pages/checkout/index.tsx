@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import { citySuggestions } from "../../utils/const";
 import { HotelClass } from "../../components/hotel-class";
-import { MdFreeBreakfast } from "react-icons/md";
-import { TbAirConditioning } from "react-icons/tb";
-import { FaParking, FaWifi } from "react-icons/fa";
 import { ContactForm, ContactFormData } from "../../components/contact-form";
 import { PaymentSelection } from "../../components/payment-selection";
 import { CheckoutSteps } from "../../components/checkout-steps";
 import useCheckoutStore, { BankDetails } from "../../store/checkout-store";
 import { CheckoutConfirmation } from "../../components/checkout-confirmation";
+import { PromoCreateLogin } from "../../components/promo-create-login";
+import { VscDebugBreakpointLog } from "react-icons/vsc";
+import { BookingFormData, Room } from "~repo-shared";
+import { format } from "date-fns";
+import useSearchStore from "../../store/search-store";
+import { bookingHotel } from "../../services/api/checkout";
+import { formatBookingDates } from "../../utils/date-format";
 
 export function RenderCheckout() {
   const steps = [
-    { number: 1, title: "Booking Details" },
-    { number: 2, title: "Select Payment" },
-    { number: 3, title: "Confirmation" },
+    { number: 1, title: "Select Room" },
+    { number: 2, title: "Booking Details" },
+    { number: 3, title: "Select Payment" },
+    { number: 4, title: "Confirmation" },
   ];
 
   const {
@@ -26,13 +31,19 @@ export function RenderCheckout() {
     setCurrentStep,
     setPaymentMethod,
     setContactDetail,
-    setSelectedHotel,
+    setSelectedRoom,
+    selectedRoom,
     resetCheckout,
+    notes,
   } = useCheckoutStore();
 
+  const { selectedDate } = useSearchStore();
+
+  const startDate = selectedDate.start?.toLocaleString();
+  const endDate = selectedDate.end?.toLocaleString();
+
   const handleSubmit = (contactData: ContactFormData) => {
-    console.log("contactData", contactData);
-    setContactDetail(contactData)
+    setContactDetail(contactData);
     setCurrentStep(currentStep + 1);
   };
 
@@ -40,15 +51,58 @@ export function RenderCheckout() {
 
   const handlePaymentSubmit = async (method: BankDetails) => {
     setIsProcessing(true);
+    if (!selectedHotel?.id || !selectedRoom?.id) {
+      return;
+    }
+
+    const formattedDate = formatBookingDates(
+      selectedDate?.start as Date,
+      selectedDate.end as Date
+    );
+
     try {
-      setPaymentMethod(method)
-      setCurrentStep(currentStep + 1);
+      setPaymentMethod(method);
+      const body: BookingFormData = {
+        hotelId: selectedHotel.id,
+        roomId: selectedRoom.id,
+        email: contactDetail.email,
+        fullName: contactDetail.fullName,
+        phoneNumber: contactDetail.phoneNumber,
+        paymentMethod: method.name,
+        paymentAccountNumber: method.virtualAccount,
+        checkIn: formattedDate.start,
+        checkOut: formattedDate.end,
+        notes,
+      };
+      console.log("bodycok", body);
+      setTimeout(() => {
+        bookingHotel(body)
+          .then((res) => {
+            console.log('ress', res)
+            if (res.success) {
+              setCurrentStep(currentStep + 1);
+            }
+          })
+          .catch((error) => alert(error.toString()))
+          .finally(() => setIsProcessing(false));
+      }, 1000);
     } catch (error) {
       // Handle error
     } finally {
       setIsProcessing(false);
     }
   };
+
+  const onSelectRoom = (room: Room) => {
+    setSelectedRoom(room);
+    setCurrentStep(currentStep + 1);
+  };
+
+  useEffect(() => {
+    return () => {
+      resetCheckout();
+    };
+  }, []);
 
   return (
     <div className="checkout-wrapper">
@@ -61,45 +115,96 @@ export function RenderCheckout() {
 
       <div className="checkout-content-wrapper">
         <div className="checkout-content">
-          {currentStep === 1 && <div className="promo-wrapper">
-            <a className="promo-link" href="/auth" target="_blank">
-              Create account
-            </a>
-            <span className="promo-divider">or</span>
-            <a className="promo-link" href="/auth" target="_blank">
-              Login
-            </a>
-            <span className="promo-divider"> to get more discount</span>
-          </div>}
+          {currentStep === 1 && <PromoCreateLogin />}
           {currentStep === 1 && (
+            <div className="column gap-y-2">
+              <div className="checkout-content-card" style={{ flex: 1 }}>
+                <div className="row gap-x-2">
+                  <img
+                    src={selectedHotel?.images}
+                    className="booking-details-img"
+                  />
+                  <div className="list-item-info-wrapper">
+                    <h1 className="hotel-title">{selectedHotel?.name}</h1>
+                    <HotelClass star={selectedHotel?.classHotel ?? 1} />
+                    <div>4.5/5.0 (1,000 reviews)</div>
+                    <div>
+                      {/* <h3>Facilities</h3> */}
+                      <p>{selectedHotel?.description}</p>
+                    </div>
+                    <div>
+                      <h3>Add Notes (Optional)</h3>
+                      <input
+                        placeholder="Please add one pillow.."
+                        className="input"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <h2>Select Room</h2>
+                <div className="row gap-x-2">
+                  {selectedHotel?.rooms?.map((room) => (
+                    <div
+                      key={room.id}
+                      className="checkout-content-card"
+                      style={{ flex: 1 }}
+                    >
+                      <div>
+                        <h2>{room.type}</h2>
+                        <h3>{room.description}</h3>
+                      </div>
+                      <div>Facilities</div>
+                      <div className="row gap-x-2">
+                        <div className="grid-facilities" style={{ flex: 1 }}>
+                          {room?.facilities.split(",").map((facility) => (
+                            <div key={facility}>
+                              <VscDebugBreakpointLog size={18} /> {facility}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="column gap-y-2" style={{ flex: 1 }}>
+                          <div>
+                            Refundable:{" "}
+                            {room.refundable ? "Refundable" : "Non Refundable"}
+                          </div>
+                          <div
+                            className="button-search"
+                            onClick={() => onSelectRoom(room)}
+                          >
+                            Choose Room
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {currentStep === 2 && (
             <div className="row gap-x-2">
               <div className="checkout-content-card" style={{ flex: 1 }}>
                 <h2>Booking Details</h2>
                 <div className="row gap-x-2">
                   <img
-                    src={citySuggestions[0].imageSource}
+                    src={selectedHotel?.images}
                     className="booking-details-img"
                   />
                   <div className="list-item-info-wrapper">
-                    <div className="hotel-title">Hotel Jakarta</div>
-                    <HotelClass star={4} />
+                    <div className="hotel-title">{selectedHotel?.name}</div>
+                    <HotelClass star={selectedHotel?.classHotel ?? 1} />
                     <div>4.5/5.0 (1,000 reviews)</div>
                     <div>
                       <h3>Facilities</h3>
                       <div className="grid-facilities">
-                        <div>
-                          <MdFreeBreakfast size={18} /> Breakfast
-                        </div>
-                        <div>
-                          <TbAirConditioning size={18} />
-                          Air Conditioner
-                        </div>
-                        <div>
-                          <FaWifi size={18} /> WiFi
-                        </div>
-                        <div>
-                          <FaParking size={18} /> Parking
-                        </div>
+                        {selectedHotel?.facilities
+                          .split(",")
+                          .map((facility) => (
+                            <div key={facility}>
+                              <VscDebugBreakpointLog size={18} /> {facility}
+                            </div>
+                          ))}
                       </div>
                     </div>
                     <div>
@@ -115,15 +220,24 @@ export function RenderCheckout() {
               <div className="checkout-content-card">
                 <div className="column" style={{ width: 300 }}>
                   <p className="subtotal-subtitle">
-                    Jun 1, 2025 {"->"} Jun 2, 2025
+                    {selectedDate.start &&
+                      format(
+                        selectedDate.start.toString(),
+                        "MMM dd, yyyy"
+                      )}{" "}
+                    {"->"}{" "}
+                    {selectedDate.end &&
+                      format(selectedDate.end?.toString(), "MMM dd, yyyy")}
                   </p>
-                  <div className="subtotal-title">Room: 1 Guest</div>
+                  <div className="subtotal-title">
+                    Room: {selectedRoom?.type}
+                  </div>
                   <div className="subtotal-title">Days: 1 Night</div>
                   <div className="column gap-y-2" style={{ marginTop: 30 }}>
                     <div>SUBTOTAL</div>
                     <div className="row gap-x-2 subtotal-item">
                       <div>Room (per night)</div>
-                      <div>$300</div>
+                      <div>${selectedRoom?.price}</div>
                     </div>
 
                     <div className="row gap-x-2 subtotal-item">
@@ -132,19 +246,23 @@ export function RenderCheckout() {
                     </div>
                     <div className="row gap-x-2 subtotal-item">
                       <div>Tax</div>
-                      <div>$30</div>
+                      <div>${(selectedRoom?.price ?? 0) * 0.01}</div>
                     </div>
                   </div>
                   <div className="row gap-x-2 subtotal-item">
                     <h3>TOTAL: </h3>
-                    <h3>$330</h3>
+                    <h3>
+                      $
+                      {(selectedRoom?.price ?? 0) +
+                        (selectedRoom?.price ?? 0) * 0.01}
+                    </h3>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {currentStep === 1 && (
+          {currentStep === 2 && (
             <div className="row gap-x-2">
               <ContactForm
                 onSubmit={handleSubmit}
@@ -154,7 +272,7 @@ export function RenderCheckout() {
             </div>
           )}
 
-          {currentStep === 2 && (
+          {currentStep === 3 && (
             <div>
               <PaymentSelection
                 onSubmit={handlePaymentSubmit}
@@ -162,12 +280,11 @@ export function RenderCheckout() {
               />
             </div>
           )}
-          {currentStep === 3 && (
+          {currentStep === 4 && (
             <CheckoutConfirmation
-              bookingNumber="BK20250601123456"
-              checkInDate="Jun 1, 2025"
-              checkOutDate="Jun 2, 2025"
-              totalPrice="IDR 1,250,000"
+              checkInDate={startDate && format(startDate, "MMM dd, yyyy")}
+              checkOutDate={endDate && format(endDate, "MMM dd, yyyy")}
+              totalPrice={`$ ${(selectedRoom?.price ?? 0) + (selectedRoom?.price ?? 0) * 0.01}`}
               email={contactDetail.email}
             />
           )}

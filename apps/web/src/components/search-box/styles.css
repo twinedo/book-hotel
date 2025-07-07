@@ -29,18 +29,6 @@
     gap: 1rem;
 }
 
-.promo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, rgb(244, 67, 54, 0.8) 40%, rgb(255, 105, 180) 100%);
-    color: #fff;
-    border-radius: 10px 10px 0 0;
-    font-weight: 700;
-    padding: 1rem;
-    width: 25rem;
-}
-
 .button-search {
     background: #5baaff;
     display: flex;

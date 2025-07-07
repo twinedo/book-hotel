@@ -7,8 +7,8 @@ export function HotelClass({ star }: { star: number }) {
     <div className="card-hotel-class-list">
       {Array(star)
         .fill("")
-        .map(() => (
-          <FaStar size={16} color="yellow" />
+        .map((_, index) => (
+          <FaStar key={index} size={16} color="yellow" />
         ))}
     </div>
   );

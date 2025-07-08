@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./src/index.ts",
+    "start": "./server"
+  },
+  "dependencies": {
+    "@elysiajs/bearer": "^1.3.0",
+    "@elysiajs/cors": "^1.3.3",
+    "@elysiajs/jwt": "^1.3.1",
+    "@elysiajs/swagger": "^1.3.1",
+    "@prisma/client": "^6.11.1",
+    "@types/bun": "^1.2.18",
+    "elysia": "latest",
+    "~repo-shared": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "prisma": "^6.11.1"
+  },
+  "module": "src/index.js"
+}

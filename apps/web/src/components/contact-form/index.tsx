@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./styles.css";
+import useUserStore from "src/store/user-store";
 
 export type ContactFormData = {
   fullName: string;
@@ -20,7 +21,17 @@ export const ContactForm = ({
   buttonText = "Submit",
   showHeader = true,
 }: ContactFormProps) => {
-  const [formData, setFormData] = useState<ContactFormData>(initialValues);
+  const { user, isLoggedIn } = useUserStore();
+
+  const initValue = isLoggedIn
+    ? {
+        ...initialValues,
+        fullName: user?.fullName ?? "",
+        email: user?.email ?? "",
+      }
+    : initialValues;
+
+  const [formData, setFormData] = useState<ContactFormData>(initValue);
   const [errors, setErrors] = useState<ContactFormData>({
     fullName: "",
     phoneNumber: "",

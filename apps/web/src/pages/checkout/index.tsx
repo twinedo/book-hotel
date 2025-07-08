@@ -14,6 +14,7 @@ import { format } from "date-fns";
 import useSearchStore from "../../store/search-store";
 import { bookingHotel } from "../../services/api/checkout";
 import { formatBookingDates } from "../../utils/date-format";
+import useUserStore from "../../store/user-store";
 
 export function RenderCheckout() {
   const steps = [
@@ -26,7 +27,6 @@ export function RenderCheckout() {
   const {
     currentStep,
     contactDetail,
-    paymentMethod,
     selectedHotel,
     setCurrentStep,
     setPaymentMethod,
@@ -38,6 +38,7 @@ export function RenderCheckout() {
   } = useCheckoutStore();
 
   const { selectedDate } = useSearchStore();
+  const {user, isLoggedIn} = useUserStore()
 
   const startDate = selectedDate.start?.toLocaleString();
   const endDate = selectedDate.end?.toLocaleString();
@@ -115,7 +116,7 @@ export function RenderCheckout() {
 
       <div className="checkout-content-wrapper">
         <div className="checkout-content">
-          {currentStep === 1 && <PromoCreateLogin />}
+          {currentStep === 1 && !isLoggedIn && <PromoCreateLogin />}
           {currentStep === 1 && (
             <div className="column gap-y-2">
               <div className="checkout-content-card" style={{ flex: 1 }}>
@@ -155,7 +156,7 @@ export function RenderCheckout() {
                       </div>
                       <div>Facilities</div>
                       <div className="row gap-x-2">
-                        <div className="grid-facilities" style={{ flex: 1 }}>
+                        <div className="column gap-y-2" style={{ flex: 1 }}>
                           {room?.facilities.split(",").map((facility) => (
                             <div key={facility}>
                               <VscDebugBreakpointLog size={18} /> {facility}

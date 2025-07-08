@@ -5,9 +5,11 @@ import { PopupDate } from "../popup-date";
 import { PopupRoomGuest } from "../popup-room-guest";
 import useSearchStore from "../../store/search-store";
 import { PromoCreateLogin } from "../promo-create-login";
+import useUserStore from "../../store/user-store";
 
 export function SearchBox() {
   const { selectedLocation, setIsResult } = useSearchStore();
+  const isLoggedIn = useUserStore(state => state.isLoggedIn)
 
   const onSearchHotels = () => {
     setIsResult(true);
@@ -15,7 +17,7 @@ export function SearchBox() {
 
   return (
     <div className="search-wrapper">
-      <PromoCreateLogin />
+      {!isLoggedIn && <PromoCreateLogin />}
       <div className="search-container">
         <div className="search-container-row">
           <PopupSearch />

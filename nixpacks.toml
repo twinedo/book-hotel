@@ -1,5 +1,5 @@
 [phases.setup]
-packages = ["unzip", "bun", "debian-openssl-1.1.x"]
+packages = ["unzip", "bun"]
 
 [phases.build]
 commands = [

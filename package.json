@@ -2,15 +2,13 @@
   "private": true,
    "scripts": {
     "dev": "turbo run dev --parallel",
-    "start": "cd apps/backend && bun run start && cd.. && cd web && bun run preview",
+    "build": "turbo run build",
+    "deploy": "turbo run deploy",
+    "start": "turbo run start",
     "backend": "cd apps/backend && bun run dev",
     "frontend": "cd apps/frontend && bun run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "start:backend": "cd apps/backend && bun run start",
-    "start:frontend": "cd apps/web && bun run preview",
-    "build": "bun run --cwd apps/backend build && bun run --cwd apps/web build"
-    
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "@types/react-dom": "^19.1.6",

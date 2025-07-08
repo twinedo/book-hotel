@@ -1,11 +1,11 @@
 [phases.setup]
-nixpkgsArchive = "master"
-packages = ["unzip", "bun"]  # unzip must come first!
+packages = ["unzip", "bun"]
 
 [phases.build]
 commands = [
-  "cd apps/backend && bun install --production --frozen-lockfile",
-  "cd apps/backend && bun build --compile --minify --target bun --outfile server ./src/index.ts"
+  "cd apps/backend && bun install --production",
+  "cd apps/backend && bun run prisma generate",
+  "cd apps/backend && bun run build"
 ]
 
 [phases.start]

@@ -2,8 +2,12 @@ import { headerAuth, headerMenu } from "./const";
 import React from "react";
 import "./styles.css";
 import useAuthStore from "../../store/auth-store";
+import useUserStore from "../../store/user-store";
 
 export function Header() {
+
+  const isLoggedIn = useUserStore(state => state.isLoggedIn)
+
   const onNavigateToAuth = (value: "Sign In" | "Sign Up") => {
     const tab = value === "Sign In" ? "login" : "register";
     useAuthStore.getState().setCurrentTab(tab);
@@ -21,7 +25,7 @@ export function Header() {
           ))}
         </nav>
         <div className="header-auth">
-          {headerAuth.map((item) => (
+          {!isLoggedIn && headerAuth.map((item) => (
             <a
               key={item.title}
               href={item.href}
@@ -33,6 +37,7 @@ export function Header() {
               {item.title}
             </a>
           ))}
+          {isLoggedIn && <a href="/dashboard"><strong>Dashboard</strong></a>}
         </div>
       </div>
     </header>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./styles.css";
-import useUserStore from "src/store/user-store";
+import useUserStore from "../../store/user-store";
 
 export type ContactFormData = {
   fullName: string;

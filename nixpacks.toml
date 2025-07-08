@@ -1,7 +1,16 @@
 [phases.setup]
-aptPkgs=["unzip"]
+nixpkgsArchive = "master"  # Ensures latest Bun version
 
 [phases.bun]
 cmds=["curl -fsSL https://bun.sh/install | bash"]
 paths = ["~/.bun/bin"]
 dependsOn=["setup"]
+
+[phases.build]
+commands = [
+  "cd apps/backend && bun install --production",
+  "cd apps/backend && bun build --compile --minify --target bun --outfile server ./src/index.ts"
+]
+
+[phases.start]
+command = "cd apps/backend && ./server"

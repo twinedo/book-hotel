@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --clearScreen false",
     "build": "tsc && vite build",
+    "start": "vite preview",
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.ts\""
   },
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@types/node": "^24.0.10",
+    "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^8.57.0",
     "typescript": "5.5.4",
     "vite": "^5.1.4"

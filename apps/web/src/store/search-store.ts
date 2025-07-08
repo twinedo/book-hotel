@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { DateRange } from "../components/date-range-picker";
 import { persist } from "zustand/middleware";
-import { Hotel } from "~repo-shared";
 
 interface RoomGuest {
   rooms: number;

@@ -1,10 +1,10 @@
 [phases.setup]
-packages = ["unzip", "bun"]
+packages = ["unzip", "bun", "openssl-3.0.x"]  # ← Add OpenSSL
 
 [phases.build]
 commands = [
   "cd apps/backend && bun install --production",
-  "cd apps/backend && bun run prisma generate",
+  "cd apps/backend && bunx prisma generate",
   "cd apps/backend && bun run build"
 ]
 

@@ -1,33 +1,41 @@
-# `Turborepo` Vite starter
+# A Booking Hotel Flow `Fullstack` App
+A Booking Hotel App is website for Booking Hotel. User can find any hotel based on city, choose a room, and input contact details for booking. 
+While user can login/register to see the booking history or cancel the booking.
+This project is monorepo supported by `Turborepo` contains Frontend (web) and Backend under `apps` folder. Supported by Bun as package manager.
+![image](https://github.com/user-attachments/assets/64601023-af42-4b7c-a298-4b48f2013690)
 
-This is a community-maintained example. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
 
-## Using this example
+# Running the Project
+To run the project, first you need to setup dependencies:
+## [Bun](https://bun.sh/) 
+- Install Bun `curl -fsSL https://bun.sh/install | bash` or `npm install -g bun`
+## Clone Project
+- Clone Project, open in your vscode.
+- run `bun install` in root project
+- run `bun run dev`
+- you will see on the terminal:
+1. backend:dev: 🦊 Elysia is running at localhost:3000
+2. docs:dev:   ➜  Local:   http://localhost:5173/
+3. web:dev:   ➜  Local:   http://localhost:5174/
+- Open in your browser `http://localhost:5174/` and `http://localhost:3000/swagger` (swagger for backend)
+  
 
-Run the following command:
+# Tech Stack
+## Frontend
+- Vite + React + Vanilla
+- Language: Typescript
+- CSS
+## Backend
+- [ElysiaJs](https://elysiajs.com/)
+- [Prisma](https://prisma.io)
+- Database: SQLite
+- Language: Typescript
+## State Management 
+- [Zustand](https://zustand.docs.pmnd.rs/)
+## Repo
+- [Turborepo](https://turborepo.com/)
+- Remote repository: Github
+## Package Manager
+- [Bun](https://bun.sh/)
 
-```sh
-npx create-turbo@latest -e with-vite
-```
 
-## What's inside?
-
-This Turborepo includes the following packages and apps:
-
-### Apps and Packages
-
-- `docs`: a vanilla [vite](https://vitejs.dev) ts app
-- `web`: another vanilla [vite](https://vitejs.dev) ts app
-- `@repo/ui`: a stub component & utility library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: shared `eslint` configurations
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting

@@ -79,4 +79,9 @@
     display: block;
 }
 
-/* Rest of your form styles... */
+.auth-button {
+    background: #646cff;
+    color: #fff;
+    width: 100%;
+    outline: none;
+}

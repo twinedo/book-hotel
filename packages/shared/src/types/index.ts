@@ -7,6 +7,7 @@ export type User = {
   bookings?: Booking[];
   createdAt?: Date;
   updatedAt?: Date;
+  fullName?: string;
 };
 
 export type UserLogin = Partial<User>

@@ -1,5 +1,5 @@
 [phases.setup]
-packages = ["unzip", "bun", "openssl-3.0.x"]  # ← Add OpenSSL
+packages = ["unzip", "bun", "openssl-3.0.x"]
 
 [phases.build]
 commands = [

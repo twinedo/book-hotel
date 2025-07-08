@@ -2,7 +2,7 @@
   "private": true,
    "scripts": {
     "dev": "turbo run dev --parallel",
-    "start": "turbo run start",
+    "start": "cd apps/backend && bun run start && cd.. && cd web && bun run preview",
     "backend": "cd apps/backend && bun run dev",
     "frontend": "cd apps/frontend && bun run dev",
     "lint": "turbo run lint",

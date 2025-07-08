@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import { citySuggestions } from "../../utils/const";
 import { HotelClass } from "../../components/hotel-class";
 import { ContactForm, ContactFormData } from "../../components/contact-form";
 import { PaymentSelection } from "../../components/payment-selection";
@@ -38,7 +37,7 @@ export function RenderCheckout() {
   } = useCheckoutStore();
 
   const { selectedDate } = useSearchStore();
-  const {user, isLoggedIn} = useUserStore()
+  const { isLoggedIn } = useUserStore();
 
   const startDate = selectedDate.start?.toLocaleString();
   const endDate = selectedDate.end?.toLocaleString();
@@ -79,7 +78,7 @@ export function RenderCheckout() {
       setTimeout(() => {
         bookingHotel(body)
           .then((res) => {
-            console.log('ress', res)
+            console.log("ress", res);
             if (res.success) {
               setCurrentStep(currentStep + 1);
             }

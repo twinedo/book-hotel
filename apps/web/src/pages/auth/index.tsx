@@ -3,8 +3,10 @@ import useAuthStore from "../../store/auth-store";
 import { login, register } from "../../services/api/auth";
 import "./styles.css";
 import useUserStore from "../../store/user-store";
+import { useNavigate } from 'react-router';
 
 export function RenderAuth() {
+  const navigate = useNavigate()
   const { currentTab, setCurrentTab } = useAuthStore();
   const [formData, setFormData] = useState({
     login: { email: '', password: '' },
@@ -45,7 +47,7 @@ export function RenderAuth() {
         useUserStore.getState().setUser(res.data.user);
         useUserStore.getState().setToken(res.data.token);
         useUserStore.getState().setIsLoggedIn(true);
-        window.location.href = '/dashboard';
+        navigate('/dashboard')
       } else {
         setErrors({ ...errors, login: res?.error || 'Login failed' });
       }

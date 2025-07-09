@@ -4,8 +4,14 @@ import { RouterProvider } from "react-router";
 import { router } from "./router";
 import React from "react";
 
-document.body.innerHTML = '<main id="main-content"></main>';
+// Create a clean root container
+const rootElement = document.getElementById("root") || document.body;
+rootElement.innerHTML = '<div id="root"></div>'; // Cleaner container
 
-const root = createRoot(document.getElementById("main-content")!);
+const root = createRoot(document.getElementById("root")!);
 
-root.render(<RouterProvider router={router} />);
+root.render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);

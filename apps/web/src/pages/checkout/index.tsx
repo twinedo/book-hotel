@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./styles.css";
 import { HotelClass } from "../../components/hotel-class";
 import { ContactForm, ContactFormData } from "../../components/contact-form";
@@ -14,6 +14,7 @@ import useSearchStore from "../../store/search-store";
 import { bookingHotel } from "../../services/api/checkout";
 import { formatBookingDates } from "../../utils/date-format";
 import useUserStore from "../../store/user-store";
+import { CheckoutHotelDetails } from "../../components/checkout-hotel-details";
 
 export function RenderCheckout() {
   const steps = [
@@ -35,6 +36,7 @@ export function RenderCheckout() {
     resetCheckout,
     notes,
   } = useCheckoutStore();
+  const selectedRoomGuest = useSearchStore((state) => state.selectedRoomGuest);
 
   const { selectedDate } = useSearchStore();
   const { isLoggedIn } = useUserStore();
@@ -119,64 +121,72 @@ export function RenderCheckout() {
           {currentStep === 1 && (
             <div className="column gap-y-2">
               <div className="checkout-content-card" style={{ flex: 1 }}>
-                <div className="row gap-x-2">
-                  <img
-                    src={selectedHotel?.images}
-                    className="booking-details-img"
-                  />
-                  <div className="list-item-info-wrapper">
-                    <h1 className="hotel-title">{selectedHotel?.name}</h1>
-                    <HotelClass star={selectedHotel?.classHotel ?? 1} />
-                    <div>4.5/5.0 (1,000 reviews)</div>
-                    <div>
-                      {/* <h3>Facilities</h3> */}
-                      <p>{selectedHotel?.description}</p>
-                    </div>
-                    <div>
-                      <h3>Add Notes (Optional)</h3>
-                      <input
-                        placeholder="Please add one pillow.."
-                        className="input"
-                      />
+                <CheckoutHotelDetails
+                  img={selectedHotel?.images ?? ""}
+                  address={selectedHotel?.address}
+                  name={selectedHotel?.name}
+                  star={selectedHotel?.classHotel}
+                  description={selectedHotel?.description}
+                  room={selectedRoomGuest.rooms}
+                  checkIn={format(
+                    selectedDate.start?.toString() ?? "",
+                    "MMM dd, yyyy"
+                  )}
+                  checkOut={format(
+                    selectedDate.end?.toString() ?? "",
+                    "MMM dd, yyyy"
+                  )}
+                  guests={selectedRoomGuest.guests}
+                />
+                <div className="column p-2 gap-y-2">
+                  <div className="column">
+                    <p className="title">Add Notes (Optional)</p>
+                    <input
+                      placeholder="Please add one pillow.."
+                      className="input"
+                    />
+                  </div>
+                  <div className="column">
+                    <div className="title">Select Room</div>
+                    <div className="row gap-x-2">
+                      {selectedHotel?.rooms?.map((room) => (
+                        <div
+                          key={room.id}
+                          className={`checkout-content-card p-2`}
+                          style={{ flex: 1 }}
+                        >
+                          <div>
+                            <h2>{room.type}</h2>
+                            <h3>{room.description}</h3>
+                          </div>
+                          <div>Facilities</div>
+                          <div className="row gap-x-2">
+                            <div className="column gap-y-2" style={{ flex: 1 }}>
+                              {room?.facilities.split(",").map((facility) => (
+                                <div key={facility}>
+                                  <VscDebugBreakpointLog size={18} /> {facility}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="column gap-y-2" style={{ flex: 1 }}>
+                              <div>
+                                Refundable:{" "}
+                                {room.refundable
+                                  ? "Refundable"
+                                  : "Non Refundable"}
+                              </div>
+                              <div
+                                className="button-search"
+                                onClick={() => onSelectRoom(room)}
+                              >
+                                Choose Room
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-                <h2>Select Room</h2>
-                <div className="row gap-x-2">
-                  {selectedHotel?.rooms?.map((room) => (
-                    <div
-                      key={room.id}
-                      className="checkout-content-card"
-                      style={{ flex: 1 }}
-                    >
-                      <div>
-                        <h2>{room.type}</h2>
-                        <h3>{room.description}</h3>
-                      </div>
-                      <div>Facilities</div>
-                      <div className="row gap-x-2">
-                        <div className="column gap-y-2" style={{ flex: 1 }}>
-                          {room?.facilities.split(",").map((facility) => (
-                            <div key={facility}>
-                              <VscDebugBreakpointLog size={18} /> {facility}
-                            </div>
-                          ))}
-                        </div>
-                        <div className="column gap-y-2" style={{ flex: 1 }}>
-                          <div>
-                            Refundable:{" "}
-                            {room.refundable ? "Refundable" : "Non Refundable"}
-                          </div>
-                          <div
-                            className="button-search"
-                            onClick={() => onSelectRoom(room)}
-                          >
-                            Choose Room
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>

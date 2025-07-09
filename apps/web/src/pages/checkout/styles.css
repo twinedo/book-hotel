@@ -98,7 +98,7 @@
     border-radius: 10px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
               0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    /* padding: 2rem; */
 }
 
 .booking-details-img {
@@ -124,4 +124,19 @@
     font-size: 14px;
     color: #000;
     font-weight: 700;
+}
+
+.card-junior {
+    background: rgb(222, 184, 135);
+    box-shadow: 0 4px 12px rgba(222, 184, 135, 0.6);
+}
+
+.card-deluxe {
+    background: silver;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);;
+}
+
+.card-premiere {
+    background: gold;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.6);
 }

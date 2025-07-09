@@ -40,8 +40,8 @@ export function RenderCheckout() {
   const { selectedDate } = useSearchStore();
   const { isLoggedIn } = useUserStore();
 
-  const startDate = selectedDate.start?.toLocaleString();
-  const endDate = selectedDate.end?.toLocaleString();
+  const startDate = selectedDate.start?.toString();
+  const endDate = selectedDate.end?.toString();
 
   const handleSubmit = (contactData: ContactFormData) => {
     setContactDetail(contactData);

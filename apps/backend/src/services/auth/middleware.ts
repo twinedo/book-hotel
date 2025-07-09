@@ -7,12 +7,7 @@ const authMiddleware = () => {
   return new Elysia()
     .use(bearer())
     .use(jwt(jwtProps))
-    .onBeforeHandle(async ({ bearer, set, jwt }) => {
-      console.log("bearer", bearer);
-      const user = await jwt.verify(bearer || "");
-      console.log("usersa", user);
-
-      // if (user)
+    .onBeforeHandle(async ({ bearer, set }) => {
 
       if (!bearer) {
         set.status = 401;

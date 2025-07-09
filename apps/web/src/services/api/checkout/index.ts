@@ -13,7 +13,6 @@ export const bookingHotel = async (body: BookingFormData) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log("error", error);
     return error;
   }
 };

@@ -20,7 +20,6 @@ export const authController = new Elysia({ prefix: "/auth" })
           };
         } catch (error) {
           set.status = 400;
-          console.log("error", error);
           return {
             status: 400,
             message: "Registration failed",
@@ -47,7 +46,6 @@ export const authController = new Elysia({ prefix: "/auth" })
     async ({ jwt, body, set }) => {
       try {
         const { user } = await loginUser(body.email, body.password);
-        console.log('user', user)
         const token = await jwt.sign({
           ...user,
           id: user.id ?? "",

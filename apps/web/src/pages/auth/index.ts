@@ -112,7 +112,6 @@ function setupAuthForms() {
 
       login({ email, password })
         .then((res) => {
-          console.log("res", res);
           if (res.status === 200) {
             useUserStore.getState().setUser(res.data.user);
             useUserStore.getState().setToken(res.data.token);
@@ -151,7 +150,6 @@ function setupAuthForms() {
 
       register({ fullName: name, email, password })
         .then((res) => {
-          console.log("res", res);
           if (res.status === 201) {
             useAuthStore.getState().setCurrentTab("login");
           }

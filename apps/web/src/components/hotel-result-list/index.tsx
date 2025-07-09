@@ -36,8 +36,6 @@ export function HotelResultList() {
     hotels.length > 0 && filterByCity(selectedLocation);
   }, [hotels, selectedLocation]);
 
-  console.log('filteredHotelByCities', filteredHotelByCities)
-
   return (
     <div className="room-result-list-wrapper">
       {isResult && (

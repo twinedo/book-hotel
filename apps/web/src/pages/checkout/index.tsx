@@ -57,7 +57,7 @@ export function RenderCheckout() {
     }
 
     const formattedDate = formatBookingDates(
-      selectedDate?.start as Date,
+      selectedDate.start as Date,
       selectedDate.end as Date
     );
 
@@ -75,11 +75,9 @@ export function RenderCheckout() {
         checkOut: formattedDate.end,
         notes,
       };
-      console.log("bodycok", body);
       setTimeout(() => {
         bookingHotel(body)
           .then((res) => {
-            console.log("ress", res);
             if (res.success) {
               setCurrentStep(currentStep + 1);
             }

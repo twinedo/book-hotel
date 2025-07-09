@@ -27,7 +27,6 @@ export function RenderDashboard() {
 
   const onCancelBooking = (bookingId: string) => {
     cancelBooking(bookingId, user?.email ?? "").then((res) => {
-      console.log('ress cancel', res);
       if (res) {
         refetch();
       }

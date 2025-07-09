@@ -34,7 +34,6 @@ export function RenderHome() {
               {mode === "date" && (
                 <DateRangePicker onChange={(range) => {
                   setSelectedDate(range)
-                  console.log('range', range);
                 }} />
               )}
               {mode === "room-guest" && <RoomGuestCount />}

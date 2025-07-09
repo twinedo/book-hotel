@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import "./styles.css";
-import { HotelClass } from "../../components/hotel-class";
 import { ContactForm, ContactFormData } from "../../components/contact-form";
 import { PaymentSelection } from "../../components/payment-selection";
 import { CheckoutSteps } from "../../components/checkout-steps";
@@ -33,7 +32,6 @@ export function RenderCheckout() {
     setContactDetail,
     setSelectedRoom,
     selectedRoom,
-    resetCheckout,
     setNotes,
     notes,
   } = useCheckoutStore();
@@ -139,6 +137,8 @@ export function RenderCheckout() {
                     <input
                       placeholder="Please add one pillow.."
                       className="input"
+                      value={notes}
+                      onChange={e => setNotes(e.target.value)}
                     />
                   </div>
                   <div className="column">

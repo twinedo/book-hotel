@@ -22,7 +22,7 @@ export function CheckoutHotelDetails(props: CheckoutHotelDetailsProps) {
       <img className="hotel-detail-image" src={img} alt="image-detail" />
       <div className="hotel-detail-info">
         <div className="row gap-x-2">
-          <strong>{name}</strong>
+          <div className="title">{name}</div>
           <HotelClass star={star ?? 1} />
         </div>
         <p>{description}</p>

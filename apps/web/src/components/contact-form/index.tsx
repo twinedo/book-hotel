@@ -71,7 +71,7 @@ export const ContactForm = ({
   };
 
   return (
-    <div className="checkout-content-card" style={{ flex: 1 }}>
+    <div className="checkout-content-card p-2" style={{ flex: 1 }}>
       {showHeader && <h2>Contact Details</h2>}
       <form onSubmit={handleSubmit} className="column">
         <div className="form-group">

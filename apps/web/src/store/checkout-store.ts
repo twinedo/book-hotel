@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Hotel, Room } from "~repo-shared";
+import { createPersistStorage } from "./storage";
 
 interface ContactDetail {
   fullName: string;
@@ -50,6 +51,8 @@ const initCheckoutState: CheckoutState = {
   notes: "",
 };
 
+const storage = createPersistStorage<CheckoutState>();
+
 const useCheckoutStore = create<CheckoutState & CheckoutAction>()(
   persist(
     (set) => ({
@@ -66,6 +69,7 @@ const useCheckoutStore = create<CheckoutState & CheckoutAction>()(
     }),
     {
       name: "checkout-bookhotel-storage",
+      storage,
     }
   )
 );

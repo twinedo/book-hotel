@@ -79,3 +79,9 @@
 .confirmation-button:hover {
   background-color: #1565c0;
 }
+
+.booking-detail-image {
+  width: 100%;
+  height: 150px;
+  object-fit: fill;
+}

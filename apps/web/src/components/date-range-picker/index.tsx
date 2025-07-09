@@ -4,7 +4,6 @@ import "react-calendar/dist/Calendar.css";
 import "./styles.css";
 
 export type ValuePiece = Date | null;
-
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export type DateRange = {
@@ -25,17 +24,41 @@ export const DateRangePicker = ({
     initialRange || { start: new Date(), end: new Date() }
   );
 
+  const addDay = (date: Date): Date => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + 1);
+    return result;
+  };
+
   const handleStartDateChange = (date: Value) => {
-    const newRange = { ...dateRange, start: date };
-    if (newRange.end && date && date > newRange.end) {
-      newRange.end = null;
-    }
+    if (!date) return;
+    
+    const startDate = Array.isArray(date) ? date[0] : date;
+    const endDate = startDate ? addDay(startDate) : null;
+    
+    const newRange = { 
+      start: startDate, 
+      end: endDate 
+    };
+    
     setDateRange(newRange);
     onChange(newRange);
   };
 
   const handleEndDateChange = (date: Value) => {
-    const newRange = { ...dateRange, end: date };
+    if (!date) return;
+    
+    const endDate = Array.isArray(date) ? date[0] : date;
+    const newRange = { 
+      ...dateRange, 
+      end: endDate 
+    };
+    
+    // Ensure end date is not before start date
+    if (dateRange.start && endDate && endDate <= dateRange.start) {
+      newRange.end = addDay(dateRange.start as Date);
+    }
+    
     setDateRange(newRange);
     onChange(newRange);
   };
@@ -59,7 +82,9 @@ export const DateRangePicker = ({
             onChange={handleEndDateChange}
             value={dateRange.end}
             minDate={
-              dateRange.start instanceof Date ? dateRange.start : undefined
+              dateRange.start instanceof Date 
+                ? addDay(dateRange.start)
+                : undefined
             }
             selectRange={false}
           />

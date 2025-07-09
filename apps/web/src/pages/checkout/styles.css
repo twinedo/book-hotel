@@ -140,3 +140,45 @@
     background: gold;
     box-shadow: 0 4px 12px rgba(255, 215, 0, 0.6);
 }
+
+.refundable {
+    border: 1px solid lightgreen;
+    border-radius: 30px;
+    padding: 10px 15px;
+    color: lightgreen;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center
+
+}
+
+.not-refundable {
+    border: 1px solid lightcoral;
+    border-radius: 30px;
+    padding: 10px 15px;
+    color: lightcoral;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.button-choose {
+    border-radius: 10px;
+    background: #5BAAFF;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    cursor: pointer;
+}
+
+.dashed-line {
+    flex: 1;
+    height: 1px;
+    border-top: 2px dashed #ccc;
+    min-width: 20px;
+}

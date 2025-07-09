@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { User } from "~repo-shared";
+import { createPersistStorage } from "./storage";
 
 export type UserStoreState = {
   user: User | undefined;
@@ -22,6 +23,8 @@ export const initialUserState: UserStoreState = {
 
 export type UserStore = UserStoreState & UserStoreActions;
 
+const storage = createPersistStorage<UserStoreState>();
+
 const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
@@ -32,6 +35,7 @@ const useUserStore = create<UserStore>()(
     }),
     {
       name: "user-bookhotel-storage",
+      storage
     }
   )
 );

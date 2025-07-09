@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { createPersistStorage } from "./storage";
 
 export type AuthStoreState = { currentTab: "login" | "register" };
 
@@ -8,6 +9,8 @@ export type AuthStoreActions = {
 };
 
 export type AuthStore = AuthStoreState & AuthStoreActions;
+
+const storage = createPersistStorage<AuthStoreState>();
 
 const useAuthStore = create<AuthStore>()(
   persist(
@@ -18,6 +21,7 @@ const useAuthStore = create<AuthStore>()(
     }),
     {
       name: "auth-bookhotel-storage",
+      storage
     }
   )
 );

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { DateRange } from "../components/date-range-picker";
 import { persist } from "zustand/middleware";
+import { createPersistStorage } from "./storage";
 
 interface RoomGuest {
   rooms: number;
@@ -38,6 +39,8 @@ const initSearchState: SearchState = {
   isResult: false,
 };
 
+const storage = createPersistStorage<SearchState>();
+
 const useSearchStore = create<SearchState & SearchAction>()(
   persist(
     (set) => ({
@@ -52,6 +55,7 @@ const useSearchStore = create<SearchState & SearchAction>()(
     }),
     {
       name: "search-bookhotel-storage",
+      storage
     }
   )
 );

@@ -34,6 +34,7 @@ export function RenderCheckout() {
     setSelectedRoom,
     selectedRoom,
     resetCheckout,
+    setNotes,
     notes,
   } = useCheckoutStore();
   const selectedRoomGuest = useSearchStore((state) => state.selectedRoomGuest);
@@ -100,12 +101,6 @@ export function RenderCheckout() {
     setCurrentStep(currentStep + 1);
   };
 
-  useEffect(() => {
-    return () => {
-      resetCheckout();
-    };
-  }, []);
-
   return (
     <div className="checkout-wrapper">
       <div className="checkout-header">
@@ -152,15 +147,36 @@ export function RenderCheckout() {
                       {selectedHotel?.rooms?.map((room) => (
                         <div
                           key={room.id}
-                          className={`checkout-content-card p-2`}
+                          className={`checkout-content-card p-2 card-junior`}
                           style={{ flex: 1 }}
                         >
                           <div>
-                            <h2>{room.type}</h2>
+                            <div
+                              className="row"
+                              style={{ alignItems: "center" }}
+                            >
+                              <h2 style={{ flex: 1 }}>{room.type}</h2>
+                              <div
+                                className="column gap-y-2"
+                                style={{ flex: 1 }}
+                              >
+                                {room.refundable && (
+                                  <div className="refundable">Refundable</div>
+                                )}
+                                {!room.refundable && (
+                                  <div className="not-refundable">
+                                    Refundable
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                             <h3>{room.description}</h3>
                           </div>
-                          <div>Facilities</div>
-                          <div className="row gap-x-2">
+                          <div>
+                            <div className="dashed-line" />
+                          </div>
+                          <strong>Facilities</strong>
+                          <div className="column gap-y-2" style={{ flex: 1 }}>
                             <div className="column gap-y-2" style={{ flex: 1 }}>
                               {room?.facilities.split(",").map((facility) => (
                                 <div key={facility}>
@@ -168,20 +184,19 @@ export function RenderCheckout() {
                                 </div>
                               ))}
                             </div>
-                            <div className="column gap-y-2" style={{ flex: 1 }}>
-                              <div>
-                                Refundable:{" "}
-                                {room.refundable
-                                  ? "Refundable"
-                                  : "Non Refundable"}
-                              </div>
-                              <div
-                                className="button-search"
-                                onClick={() => onSelectRoom(room)}
-                              >
-                                Choose Room
+                            <div className="column gap-y-2">
+                              <div className="dashed-line" />
+                              <div className="row justify-between">
+                                <div>Availability:</div>
+                                <strong>{room.totalCount} room left</strong>
                               </div>
                             </div>
+                          </div>
+                          <div
+                            className="button-choose"
+                            onClick={() => onSelectRoom(room)}
+                          >
+                            Choose Room
                           </div>
                         </div>
                       ))}
@@ -195,40 +210,35 @@ export function RenderCheckout() {
           {currentStep === 2 && (
             <div className="row gap-x-2">
               <div className="checkout-content-card" style={{ flex: 1 }}>
-                <h2>Booking Details</h2>
-                <div className="row gap-x-2">
-                  <img
-                    src={selectedHotel?.images}
-                    className="booking-details-img"
-                  />
-                  <div className="list-item-info-wrapper">
-                    <div className="hotel-title">{selectedHotel?.name}</div>
-                    <HotelClass star={selectedHotel?.classHotel ?? 1} />
-                    <div>4.5/5.0 (1,000 reviews)</div>
-                    <div>
-                      <h3>Facilities</h3>
-                      <div className="grid-facilities">
-                        {selectedHotel?.facilities
-                          .split(",")
-                          .map((facility) => (
-                            <div key={facility}>
-                              <VscDebugBreakpointLog size={18} /> {facility}
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h3>Add Notes (Optional)</h3>
-                      <input
-                        placeholder="Please add one pillow.."
-                        className="input"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <CheckoutHotelDetails
+                  img={selectedHotel?.images ?? ""}
+                  address={selectedHotel?.address}
+                  name={selectedHotel?.name}
+                  star={selectedHotel?.classHotel}
+                  description={selectedHotel?.description}
+                  room={selectedRoomGuest.rooms}
+                  checkIn={format(
+                    selectedDate.start?.toString() ?? "",
+                    "MMM dd, yyyy"
+                  )}
+                  checkOut={format(
+                    selectedDate.end?.toString() ?? "",
+                    "MMM dd, yyyy"
+                  )}
+                  guests={selectedRoomGuest.guests}
+                />
               </div>
-              <div className="checkout-content-card">
-                <div className="column" style={{ width: 300 }}>
+            </div>
+          )}
+
+          {currentStep === 2 && (
+            <div className="row gap-x-2">
+              <ContactForm
+                onSubmit={handleSubmit}
+                buttonText="Select Payment"
+              />
+              <div className="checkout-content-card p-2">
+                <div className="column gap-y-2" style={{ width: 300 }}>
                   <p className="subtotal-subtitle">
                     {selectedDate.start &&
                       format(
@@ -239,10 +249,13 @@ export function RenderCheckout() {
                     {selectedDate.end &&
                       format(selectedDate.end?.toString(), "MMM dd, yyyy")}
                   </p>
-                  <div className="subtotal-title">
-                    Room: {selectedRoom?.type}
+                  <div className="column gap-y-2">
+                    <div className="subtotal-title">
+                      Room: {selectedRoom?.type}
+                    </div>
+                    <div className="subtotal-title">Days: 1 Night</div>
                   </div>
-                  <div className="subtotal-title">Days: 1 Night</div>
+                  <div className="dashed-line" />
                   <div className="column gap-y-2" style={{ marginTop: 30 }}>
                     <div>SUBTOTAL</div>
                     <div className="row gap-x-2 subtotal-item">
@@ -259,6 +272,7 @@ export function RenderCheckout() {
                       <div>${(selectedRoom?.price ?? 0) * 0.01}</div>
                     </div>
                   </div>
+                  <div className="dashed-line" />
                   <div className="row gap-x-2 subtotal-item">
                     <h3>TOTAL: </h3>
                     <h3>
@@ -269,16 +283,6 @@ export function RenderCheckout() {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
-          {currentStep === 2 && (
-            <div className="row gap-x-2">
-              <ContactForm
-                onSubmit={handleSubmit}
-                buttonText="Select Payment"
-              />
-              <div className="column" style={{ width: 350 }} />
             </div>
           )}
 

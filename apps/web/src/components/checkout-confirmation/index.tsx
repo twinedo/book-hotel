@@ -19,16 +19,17 @@ export function CheckoutConfirmation({
   totalPrice,
   email,
 }: ConfirmationProps) {
-  const navigate = useNavigate()
-  const {contactDetail, selectedHotel, selectedRoom, notes, resetCheckout} = useCheckoutStore();
-  const {resetSearch} = useSearchStore()
-  const [viewBooking, setViewBooking] = useState(false)
+  const navigate = useNavigate();
+  const { contactDetail, selectedHotel, selectedRoom, notes, resetCheckout } =
+    useCheckoutStore();
+  const { resetSearch } = useSearchStore();
+  const [viewBooking, setViewBooking] = useState(false);
 
   const onBackHome = () => {
-    resetCheckout()
-    resetSearch()
-    navigate('/')
-  }
+    resetCheckout();
+    resetSearch();
+    navigate("/");
+  };
 
   return (
     <div className="confirmation-container column gap-y-2">
@@ -54,56 +55,71 @@ export function CheckoutConfirmation({
           </div>
         </div>
 
-        <button className="confirmation-button" onClick={() => setViewBooking(!viewBooking)}>View Booking Details</button>
+        <button
+          className="confirmation-button"
+          onClick={() => setViewBooking(!viewBooking)}
+        >
+          View Booking Details
+        </button>
       </div>
-      {viewBooking && <div className="row gap-x-2">
-        <div className="checkout-content-card" style={{ flex: 1, padding: 20 }}>
-          <h2>Booking Details</h2>
-          <div className="row gap-x-2">
-            <img
-              src={selectedHotel?.images}
-              style={{ width: 150, height: 100 }}
-            />
-            <div className="list-item-info-wrapper">
-              <div className="hotel-title">{selectedHotel?.name}</div>
-              <HotelClass star={selectedHotel?.classHotel ?? 1} />
-              <div>4.5/5.0 (1,000 reviews)</div>
-              <div>
-                <h3>Facilities</h3>
-                <div className="grid-facilities">
-                  {selectedRoom?.facilities.split(",").map((facility) => (
-                                              <div>
-                                                <VscDebugBreakpointLog size={18} /> {facility}
-                                              </div>
-                                            ))}
-                </div>
-              </div>
-              {notes.length > 0 && (
+      {viewBooking && (
+        <div className="row gap-x-2">
+          <div
+            className="checkout-content-card"
+            style={{ width: "300px", overflow: "hidden" }}
+          >
+            <img src={selectedHotel?.images} className="booking-detail-image" />
+            <div className="row gap-x-2 p-2">
+              <div className="list-item-info-wrapper">
+                <div className="hotel-title">{selectedHotel?.name}</div>
+                <HotelClass star={selectedHotel?.classHotel ?? 1} />
+                <div>{selectedHotel?.description}</div>
                 <div>
-                  <h3>Notes</h3>
-                  <input value={notes} className="input" disabled />
+                  <h3>Facilities</h3>
+                  <div className="grid-facilities">
+                    {selectedRoom?.facilities.split(",").map((facility) => (
+                      <div>
+                        <VscDebugBreakpointLog size={18} /> {facility}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              )}
+                {notes.length > 0 && (
+                  <div>
+                    <h3>Notes</h3>
+                    <input value={notes} className="input" disabled />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="checkout-content-card"
+            style={{ width: "300px", padding: 20 }}
+          >
+            <h2>Guest Details</h2>
+            <div className="row gap-x-2">
+              <div className="list-item-info-wrapper">
+                <div className="hotel-title">Name</div>
+                <div>{contactDetail.fullName}</div>
+                <div className="hotel-title">Phone Number</div>
+                <div>{contactDetail.phoneNumber}</div>
+                <div className="hotel-title">Email</div>
+                <div>{contactDetail.email}</div>
+              </div>
             </div>
           </div>
         </div>
+      )}
 
-        <div className="checkout-content-card" style={{ flex: 1, padding: 20 }}>
-          <h2>Guest Details</h2>
-          <div className="row gap-x-2">
-            <div className="list-item-info-wrapper">
-              <div className="hotel-title">Name</div>
-              <div>{contactDetail.fullName}</div>
-              <div className="hotel-title">Phone Number</div>
-              <div>{contactDetail.phoneNumber}</div>
-              <div className="hotel-title">Email</div>
-              <div>{contactDetail.email}</div>
-            </div>
-          </div>
-        </div>
-      </div>}
-
-      <button className="confirmation-button" style={{background: 'red'}} onClick={onBackHome}>Back to Home</button>
+      <button
+        className="confirmation-button"
+        style={{ background: "red" }}
+        onClick={onBackHome}
+      >
+        Back to Home
+      </button>
     </div>
   );
 }

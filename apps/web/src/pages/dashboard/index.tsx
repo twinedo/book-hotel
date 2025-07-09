@@ -5,16 +5,21 @@ import useUserStore from "../../store/user-store";
 import { useHistory } from "../../hooks/useHistory";
 import { BookingCard } from "../../components/booking-card";
 import { cancelBooking } from "../../services/api/history";
+import useCheckoutStore from "../../store/checkout-store";
+import useSearchStore from "../../store/search-store";
 
 export function RenderDashboard() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState("dashboard");
-  const { user } = useUserStore();
+  const { user, setUser, setIsLoggedIn, setToken } = useUserStore();
+  const { resetCheckout } = useCheckoutStore();
+  const { resetSearch } = useSearchStore();
   const { history: pastHistory, isLoading: isLoadingPastHistory } = useHistory(
     user?.email ?? "",
     "past"
   );
+
   const {
     history: upcomingHistory,
     refetch,
@@ -32,6 +37,15 @@ export function RenderDashboard() {
       }
     });
   };
+
+  const onLogout = () => {
+    setUser(undefined)
+    setIsLoggedIn(false)
+    setToken('')
+    resetCheckout()
+    resetSearch()
+    navigate("/auth")
+  }
 
   return (
     <div
@@ -53,7 +67,7 @@ export function RenderDashboard() {
         </div>
 
         <div className="sidebar-footer">
-          <button className="logout-btn" onClick={() => navigate("/auth")}>
+          <button className="logout-btn" onClick={onLogout}>
             Logout
           </button>
         </div>

@@ -10,7 +10,7 @@ export type UserStoreState = {
 };
 
 export type UserStoreActions = {
-  setUser: (value: User) => void;
+  setUser: (value: User | undefined) => void;
   setIsLoggedIn: (value: boolean) => void;
   setToken: (value: string) => void;
 };

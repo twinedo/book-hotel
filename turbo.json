@@ -1,16 +1,5 @@
 {
   "$schema": "https://turborepo.com/schema.json",
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "env": [
-        // env vars will impact hashes of all "build" tasks
-        "SOME_ENV_VAR"
-      ],
-      "outputs": ["dist/**"]
-    },
-    
-  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
